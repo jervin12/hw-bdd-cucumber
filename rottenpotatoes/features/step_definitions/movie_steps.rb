@@ -2,7 +2,7 @@
 
 Given /the following movies exist/ do |movies_table|
   movies_table.hashes.each do |movie|
-    Movie.create!(movie)
+    Movie.create(movie)
   end
 end
 
@@ -12,7 +12,11 @@ end
 Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
   #  ensure that that e1 occurs before e2.
   #  page.body is the entire content of the page as a string.
-  assert page.body =~ /#{e1}.+#{e2}/m
+  if page.body =~ /#{e1}.+#{e2}/m 
+    page.body =~ /#{e1}.+#{e2}/m 
+  else 
+    fail "the movie are not in the correct order"
+  end
 end
 
 # Make it easier to express checking or unchecking several boxes at once
